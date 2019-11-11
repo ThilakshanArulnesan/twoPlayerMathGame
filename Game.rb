@@ -24,32 +24,47 @@ class Game
     @players.push(player2)
 
     calc = Calculator.new
-    playerCounter = 0
+    playerCounter = 1
     maxPlayers = players.size
     #GameLoop
-    while players.detect { |p| p.health!=3 } do
-      playerCounter += 1
+    until players.detect { |p| p.health == 0  } do
+
+      puts "---- NEW TURN ----"
+      playerCounter +=1
 
       curPlayer = players[playerCounter % maxPlayers]
 
-      p 'hi'
-      puts ""
-      players[0].loseHealth
+      num1 = calc.generateNumber
+      num2 = calc.generateNumber
+      puts "#{curPlayer.name} what does #{num1} + #{num2} equal? "
+      ans = curPlayer.answerQuestion
+
+      # binding.pry
+      if calc.right?(num1,num2,ans) then
+        puts "Yes! You are correct!"
+      else
+        puts "Seriously? No."
+        curPlayer.loseHealth
+      end
+
+      puts "#{players[0].name}: #{players[0].health}/3 vs #{players[1].name}: #{players[1].health}/3"
+
     end
 
 
     #End game
     winner = players.find { |p| p.health != 0 }
 
-    puts "Game over, #{winner. name} has won with #{winner.health} left."
-    binding.pry
+    puts "#{winner.name} has won with #{winner.health} health left."
+    puts "---- GAME OVER ----"
+    puts "Good bye!"
+    # binding.pry
     return nil
   end
 end
 
+#Starts the game:
 math = Game.new
-
 math.newGame
 
-p math.players
 
