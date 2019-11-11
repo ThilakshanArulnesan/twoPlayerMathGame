@@ -12,8 +12,8 @@ class Player
     gets.chomp
   end
 
-end
+  def loseHealth
+    @health -= 1
+  end
 
-th = Player.new("TH",3)
-ans = th.answerQuestion
-puts ans
+end
